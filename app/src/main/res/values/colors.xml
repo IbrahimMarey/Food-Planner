@@ -2,4 +2,41 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="my_light_primary">#8B0000</color>
+    <color name="orange_asset">#A8F28832</color>
+    <color name="orange_red">#FF4500</color>
+    <color name="tomato">#FF6347</color>
+    <color name="gold">#FFD700</color>
+    <color name="dark_red">#8B0000</color>
+    <color name="light_coral">#F08080</color>
+
+    <!-- -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="cadmium_orange">#F28832</color>
+    <color name="battery_charged_blue">#1E98D5</color>
+    <color name="outline_color">#20272C</color>
+    <color name="not_focus">#B2B2B2</color>
+    <color name="neutral">#EDEFF4</color>
+    <color name="calamansi">#FFFBAC</color>
+    <color name="item_color_one">#8DCBE6</color>
+    <color name="item_color_two">#C8FFD4</color>
+    <color name="dark_green">#023020</color>
+    <color name="dark_grey">#1E1E1E</color>
+    <color name="search_focus">#FFCFCBCB</color>
+    //indicator color
+    <color name="inactive">#C4C4C4</color>
+    <color name="active">#F28832</color>
 </resources>
+
+<!--
+#FF4500 (Orange Red): This vibrant, appetizing color is often associated with fruits like oranges and is known to increase feelings of hunger.
+#FFA500 (Orange): This warm and inviting color is commonly associated with citrus fruits and can evoke a sense of energy and appetite.
+#FF6347 (Tomato): This rich, deep red color reminiscent of ripe tomatoes can be visually appealing and stimulate cravings for savory dishes.
+#FFD700 (Gold): This lustrous and inviting color is reminiscent of golden-brown crusts, roasted foods, and can create a sense of indulgence.
+#8B0000 (Dark Red): This deep, dark red color is often associated with rich flavors and can evoke thoughts of decadent chocolate or deep-red meats.
+#F08080 (Light Coral): This soft, warm color is reminiscent of delicate pastries and can create a sense of sweetness and appetite.
+-->

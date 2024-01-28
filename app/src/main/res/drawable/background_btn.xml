@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#20272C">
+    <item>
+        <shape>
+            <corners android:radius="16dp" />
+            <solid android:color="@color/orange_red" />
+            <padding android:bottom="8dp" android:left="8dp" android:right="8dp" android:top="8dp"/>
+        </shape>
+<!--        cadmium_orange-->
+    </item>
+</ripple>
