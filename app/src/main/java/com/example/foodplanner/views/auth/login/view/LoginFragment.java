@@ -101,8 +101,7 @@ public class LoginFragment extends Fragment implements LoginView{
         if (emailET.getText() != null && !emailET.getText().toString().isEmpty() && passwordET.getText() != null && !passwordET.getText().toString().isEmpty())
             return true;
         else {
-            //binding.textViewMessageLogin.setText(R.string.please_fill_all_data);
-            Toast.makeText(getActivity(), "please enter valid data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.please_enter_valid_data, Toast.LENGTH_SHORT).show();
             return false;
         }
     }

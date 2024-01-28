@@ -67,7 +67,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
         // Register Logic
         emailET.addTextChangedListener(getEmailWatcher(emailET));
         passwordET.addTextChangedListener(getPasswordWatcher(passwordET));
-        confirmPasswordET.addTextChangedListener(getPasswordWatcher(confirmPasswordET));
+        confirmPasswordET.addTextChangedListener(getConfirmPasswordWatcher(confirmPasswordET));
         skipTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +91,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
 
     @Override
     public void authSuccessfully(FirebaseUser user) {
-        Toast.makeText(getActivity(), "Register Successfully please login", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.register_successfully, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "authSuccessfully: register user with id = "+user.getUid());
         goToMainActivity();
        // Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment2);
@@ -131,7 +131,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
             @Override
             public void afterTextChanged(Editable s) {
                 if (!emailValidation(s.toString())) {
-                    editText.setError("please enter valid email");
+                    editText.setError(getString(R.string.please_enter_valid_email));
                 } else {
                     editText.setError(null);
                 }
@@ -155,13 +155,13 @@ public class RegisterFragment extends Fragment implements RegisterView{
             @Override
             public void afterTextChanged(Editable s) {
                 if (!isPassContainNumber(s.toString())) {
-                    editText.setError("one number required");
+                    editText.setError(getString(R.string.one_number_required));
                 } else if (!isPassContainSpecialChar(s.toString())) {
-                    editText.setError("one special symbol required");
+                    editText.setError(getString(R.string.one_special_symbol_required));
                 } else if (!isPassContainUpperCase(s.toString())) {
-                    editText.setError("one uppercase required");
+                    editText.setError(getString(R.string.one_uppercase_required));
                 } else if (!isPassLengthGT8(s.toString())) {
-                    editText.setError("at least 8 char");
+                    editText.setError(getString(R.string.at_least_8_char));
                 } else {
                     editText.setError(null);
                 }
@@ -185,7 +185,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
             @Override
             public void afterTextChanged(Editable s) {
                 if (!checkPassEquality()) {
-                    editText.setError("check your password");
+                    editText.setError(getString(R.string.check_your_password));
                 } else {
                     editText.setError(null);
                 }
@@ -221,8 +221,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
         if (emailET.getText() != null && !emailET.getText().toString().isEmpty() && passwordET.getText() != null && !passwordET.getText().toString().isEmpty() && confirmPasswordET.getText() != null && !confirmPasswordET.getText().toString().isEmpty())
             return true;
         else {
-            Log.d(TAG, "isAllDataFilled: false ");
-            //binding.textViewMessage.setText(R.string.please_fill_all_data);
+            Toast.makeText(getActivity(), R.string.please_enter_valid_data, Toast.LENGTH_SHORT).show();
             return false;
         }
     }

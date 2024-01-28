@@ -12,4 +12,12 @@
     <string name="don_t_have_an_account">Don\'t Have an Account ?</string>
     <string name="already_have_account">Already Have an account ?</string>
     <string name="name_filed">Enter your Name</string>
+    <string name="check_your_password">check your password</string>
+    <string name="at_least_8_char">at least 8 char</string>
+    <string name="one_uppercase_required">one uppercase required</string>
+    <string name="one_special_symbol_required">one special symbol required</string>
+    <string name="one_number_required">one number required</string>
+    <string name="please_enter_valid_email">please enter valid email</string>
+    <string name="register_successfully">Register Successfully</string>
+    <string name="please_enter_valid_data">please enter valid data</string>
 </resources>

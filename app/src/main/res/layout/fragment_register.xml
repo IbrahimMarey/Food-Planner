@@ -141,7 +141,6 @@
         android:id="@+id/register_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/background_btn"
         android:text="@string/register"
