@@ -5,7 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.auth.login.view.LoginFragment" >
+    <FrameLayout
+        android:id="@+id/frame_animation_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/animation_bg"
+        >
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_loading_login_view"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
+    </FrameLayout>
     <RelativeLayout
         android:layout_width="36dp"
         android:layout_height="wrap_content"
@@ -31,9 +46,6 @@
             android:layout_below="@id/tv_skip_login"
             android:background="@color/orange_red" />
     </RelativeLayout>
-
-
-
     <TextView
         android:id="@+id/textView6"
         style="@style/appNameInLoginAndSignUp"

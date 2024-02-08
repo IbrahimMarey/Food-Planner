@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.foodplanner.views.home.view.HomeFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_displaySearchMealsFragment"
+            app:destination="@id/displaySearchMealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.example.foodplanner.views.mealdetails.view.MealDetailsFragment"
+        android:label="@string/meal_details"
+        tools:layout="@layout/fragment_meal_details">
+        <argument
+            android:name="mealID"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.foodplanner.views.favorite.view.FavoriteFragment"
+        android:label="@string/favorite_meals"
+        >
+
+        <action
+            android:id="@+id/action_favoriteFragment_to_mealDetailsFragment2"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.foodplanner.views.plan.view.PlanFragment"
+        android:label="@string/week_plan" >
+
+        <action
+            android:id="@+id/action_planFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.foodplanner.views.testsearch.view.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search_test" >
+        <action
+            android:id="@+id/action_searchFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_displaySearchMealsFragment"
+            app:destination="@id/displaySearchMealsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealSearchFragment"
+        android:name="com.example.foodplanner.views.testsearch.view.meals.MealSearchFragment"
+        android:label="MealSearchFragment" >
+        <action
+            android:id="@+id/action_mealSearchFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/displaySearchMealsFragment"
+        android:name="com.example.foodplanner.views.testsearch.view.displaysearchmeals.DisplaySearchMealsFragment"
+        android:label="@string/meals">
+        <argument
+            android:name="searchType"
+            app:argType="com.example.foodplanner.helpers.CheckSearchBy" />
+        <action
+            android:id="@+id/action_displaySearchMealsFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.foodplanner.views.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
