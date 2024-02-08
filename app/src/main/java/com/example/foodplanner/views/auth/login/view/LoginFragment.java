@@ -1,18 +1,32 @@
 package com.example.foodplanner.views.auth.login.view;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foodplanner.MainActivity;
 import com.example.foodplanner.R;
 import com.example.foodplanner.views.auth.login.presenter.LoginPresenter;
 import com.example.foodplanner.views.auth.login.presenter.LoginPresenterImplementation;
+import com.example.foodplanner.views.splash.SplashActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 
@@ -20,6 +34,13 @@ public class LoginFragment extends Fragment implements LoginView{
 
     Button loginBtn;
     LoginPresenter loginPresenter;
+
+    TextView skipTV;
+    TextView registerTV;
+    EditText emailET;
+    EditText passwordET;
+    FrameLayout animationLogin;
+    boolean isAuth;
     private static final String TAG = "LoginFragment";
     public LoginFragment() {
         // Required empty public constructor
@@ -32,22 +53,118 @@ public class LoginFragment extends Fragment implements LoginView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        isAuth = false;
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        loginBtn = view.findViewById(R.id.login_btn);
-        loginBtn.setOnClickListener(v->{
-            loginPresenter = LoginPresenterImplementation.getInstance(this);
-            loginPresenter.login("hima@mar3i.com","123456");
-        });
         return view;
     }
 
     @Override
-    public void authSuccessfully(FirebaseUser user) {
-        Log.i(TAG, "authSuccessfully: userID = "+user.getUid());
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        animationLogin = view.findViewById(R.id.frame_animation_login);
+        animationLogin.setVisibility(View.GONE);
+        skipTV = view.findViewById(R.id.tv_skip_login);
+        loginBtn = view.findViewById(R.id.login_btn);
+        emailET = view.findViewById(R.id.input_email_login);
+        passwordET = view.findViewById(R.id.input_password_login);
+        registerTV = view.findViewById(R.id.tv_go_register);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // logic
+        loginPresenter = LoginPresenterImplementation.getInstance(this);
+        emailET.addTextChangedListener(getEmailWatcher(emailET));
+        skipTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMainActivity();
+            }
+        });
+        registerTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
+        loginBtn.setOnClickListener(v->{
+            if (checkValidation()&& emailValidation(emailET.getText().toString()))
+            {
+                animationLogin.setVisibility(View.VISIBLE);
+                loginPresenter.login(emailET.getText().toString(),passwordET.getText().toString());
+            }
+        });
+    }
+
+    @Override
+    public void authSuccessfully(FirebaseUser user)
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(SplashActivity.PREFERENCES_NAME,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("uId",user.getUid().toString());
+        editor.commit();
+        isAuth=true;
+        animationLogin.setVisibility(View.GONE);
+        goToMainActivity();
+        Toast.makeText(getActivity(), "Login Successfully", Toast.LENGTH_SHORT).show();
+        String uId = preferences.getString("uId","null");
+        Log.i(MainActivity.TAG, "onCreate: SplashActivity UID = "+uId);
+
     }
 
     @Override
     public void authFailure(String errMsg) {
+        animationLogin.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), errMsg, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "authFailure: login failure "+ errMsg);
+    }
+
+
+
+    private boolean checkValidation() {
+        if (emailET.getText() != null && !emailET.getText().toString().isEmpty() && passwordET.getText() != null && !passwordET.getText().toString().isEmpty())
+            return true;
+        else {
+            Toast.makeText(getActivity(), R.string.please_enter_valid_data, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+    private boolean emailValidation(String s) {
+        String email = s.trim();
+        String emailPattern = "[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+";
+        return email.matches(emailPattern);
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("auth",isAuth);
+        getActivity().finish();
+        startActivity(intent);
+
+    }
+    private TextWatcher getEmailWatcher(EditText editText)
+    {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!emailValidation(s.toString())){
+                    editText.setError("Please enter valid email");
+                }else{
+                    editText.setError(null);
+                }
+            }
+        };
     }
 }

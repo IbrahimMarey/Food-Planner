@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView_item_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="4dp"
+    app:cardMaxElevation="6dp"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="16dp"
+    >
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageView_item_home"
+            android:layout_width="match_parent"
+            android:layout_height="164dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius_top_left="16dp"
+            app:riv_corner_radius_top_right="16dip" />
+
+        <TextView
+            android:id="@+id/tv_meal_title_item_home"
+            style="@style/base_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:background="@color/txt_layer_bg"
+            android:layout_gravity="bottom"
+            tools:text="Traditional French omelette" />
+
+</androidx.cardview.widget.CardView>

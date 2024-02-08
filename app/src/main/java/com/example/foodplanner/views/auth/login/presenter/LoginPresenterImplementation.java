@@ -1,8 +1,8 @@
 package com.example.foodplanner.views.auth.login.presenter;
 
-import com.example.foodplanner.model.repositories.AuthFirebaseRepo;
-import com.example.foodplanner.model.repositories.AuthFirebaseRepoImplementation;
-import com.example.foodplanner.network.firebase.AuthFirebaseDelegate;
+import com.example.foodplanner.model.repositories.auth.AuthFirebaseRepo;
+import com.example.foodplanner.model.repositories.auth.AuthFirebaseRepoImplementation;
+import com.example.foodplanner.network.firebase.auth.AuthFirebaseDelegate;
 import com.example.foodplanner.views.auth.login.view.LoginView;
 import com.google.firebase.auth.FirebaseUser;
 
