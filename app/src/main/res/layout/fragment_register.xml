@@ -178,7 +178,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_btn"
         app:layout_constraintTop_toBottomOf="@+id/register_btn"
         android:orientation="horizontal"
-        android:weightSum="3"
+        android:weightSum="2"
         >
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/google_login"
@@ -186,13 +186,6 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:src="@drawable/google"
-            />
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/face_login"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:src="@drawable/facebook"
             />
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/twitter_login"

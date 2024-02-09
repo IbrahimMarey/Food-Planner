@@ -114,6 +114,7 @@
     <string name="err_del_fav">Can\'t Delete Meal from Favorite</string>
     <string name="default_web_client_id">637769902026-kn138mt6f8c080b95qr7k0gc214jsgu4.apps.googleusercontent.com</string>
     <string name="search_by_any">you can search of a Meal in</string>
+    <string name="logout">Logout</string>
 
 
 </resources>

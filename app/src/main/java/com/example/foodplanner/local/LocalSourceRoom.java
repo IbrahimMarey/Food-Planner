@@ -61,6 +61,10 @@ public class LocalSourceRoom implements LocalSource{
         return dao.getAllMealsPlanAtDate(date);
     }
 
+    @Override
+    public int getAllFav() {
+        return dao.getFavMeals().size();
+    }
 
 
     @Override

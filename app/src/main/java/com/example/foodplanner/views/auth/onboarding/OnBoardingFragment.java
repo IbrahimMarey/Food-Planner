@@ -49,7 +49,6 @@ public class OnBoardingFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // check if boarding open before /////////////////////
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SplashActivity.PREFERENCES_NAME, Context.MODE_PRIVATE);
         boolean isBoarding = sharedPreferences.getBoolean("boarding",false);
         Log.i(MainActivity.TAG, "onCreateView: "+isBoarding+" "+sharedPreferences.getBoolean("boarding",false));
@@ -61,7 +60,6 @@ public class OnBoardingFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("boarding",true);
         editor.commit();
-        ///////////////////////////////////////////////////
         mSLideViewPager = (ViewPager) view.findViewById(R.id.slider_viewPager_onBoarding);
         mDotLayout = (LinearLayout) view.findViewById(R.id.indicator_layout);
 
@@ -78,10 +76,8 @@ public class OnBoardingFragment extends Fragment {
         backTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "=============", Toast.LENGTH_SHORT).show();
                 if (getBoardingItem(0) > 0){
                     mSLideViewPager.setCurrentItem(getBoardingItem(-1),true);
-
                 }
 
             }
@@ -90,7 +86,6 @@ public class OnBoardingFragment extends Fragment {
         nextTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (getBoardingItem(0) < 1)
                     mSLideViewPager.setCurrentItem(getBoardingItem(1),true);
                 else {

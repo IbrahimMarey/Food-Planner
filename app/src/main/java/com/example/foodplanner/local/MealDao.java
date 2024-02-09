@@ -16,7 +16,8 @@ import java.util.List;
 public interface MealDao {
     @Query("SELECT * FROM favorite")
     LiveData<List<MealDto>> getAllFavMeals();
-
+    @Query("SELECT * FROM favorite")
+    List<MealDto> getFavMeals();
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertMealToFav(MealDto mealDto);
     @Insert(onConflict = OnConflictStrategy.IGNORE)
