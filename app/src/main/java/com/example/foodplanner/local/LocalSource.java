@@ -20,7 +20,7 @@ public interface LocalSource {
     LiveData<List<PlanDto>> getAllMealsPlanAtDate(String date);
 
 //    void deleteMealPlan(String date,String mealId);
-
+    int getAllFav();
     @Delete
     void deleteMealPlan(PlanDto planDto);
 

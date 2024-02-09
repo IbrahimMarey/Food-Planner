@@ -30,7 +30,7 @@
     //indicator color
     <color name="inactive">#C4C4C4</color>
     <color name="active">#F28832</color>
-    <color name="animation_bg">#eaeaea</color>
+    <color name="animation_bg">#B2B2B2</color>
 </resources>
 
 <!--

@@ -1,10 +1,15 @@
 package com.example.foodplanner.views.auth.login.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +33,15 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.views.auth.login.presenter.LoginPresenter;
 import com.example.foodplanner.views.auth.login.presenter.LoginPresenterImplementation;
 import com.example.foodplanner.views.splash.SplashActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class LoginFragment extends Fragment implements LoginView{
@@ -41,6 +55,10 @@ public class LoginFragment extends Fragment implements LoginView{
     EditText passwordET;
     FrameLayout animationLogin;
     boolean isAuth;
+    ImageView twitterImg;
+    ImageView facebookImg;
+    ImageView googleImg;
+    GoogleSignInClient googleSignInClient;
     private static final String TAG = "LoginFragment";
     public LoginFragment() {
         // Required empty public constructor
@@ -68,6 +86,9 @@ public class LoginFragment extends Fragment implements LoginView{
         emailET = view.findViewById(R.id.input_email_login);
         passwordET = view.findViewById(R.id.input_password_login);
         registerTV = view.findViewById(R.id.tv_go_register);
+        googleImg = view.findViewById(R.id.login_google_login);
+        twitterImg = view.findViewById(R.id.login_twitter_login);
+
 
     }
 
@@ -96,6 +117,28 @@ public class LoginFragment extends Fragment implements LoginView{
                 loginPresenter.login(emailET.getText().toString(),passwordET.getText().toString());
             }
         });
+        // login by google
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder
+                (GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), googleSignInOptions);
+        //////////////
+        googleImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = googleSignInClient.getSignInIntent();
+                someActivityResultLauncher.launch(intent);
+            }
+        });
+
+        twitterImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginPresenter.loginByTwitter(getActivity());
+            }
+        });
     }
 
     @Override
@@ -109,9 +152,6 @@ public class LoginFragment extends Fragment implements LoginView{
         animationLogin.setVisibility(View.GONE);
         goToMainActivity();
         Toast.makeText(getActivity(), "Login Successfully", Toast.LENGTH_SHORT).show();
-        String uId = preferences.getString("uId","null");
-        Log.i(MainActivity.TAG, "onCreate: SplashActivity UID = "+uId);
-
     }
 
     @Override
@@ -139,7 +179,6 @@ public class LoginFragment extends Fragment implements LoginView{
 
     private void goToMainActivity() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra("auth",isAuth);
         getActivity().finish();
         startActivity(intent);
 
@@ -167,4 +206,29 @@ public class LoginFragment extends Fragment implements LoginView{
             }
         };
     }
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher =
+            registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>()
+                    {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                Intent data = result.getData();
+                                Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data);
+                                if (signInAccountTask.isSuccessful()) {
+                                    try {
+                                        GoogleSignInAccount googleSignInAccount = signInAccountTask.getResult(ApiException.class);
+                                        if (googleSignInAccount != null) {
+                                            AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
+                                            loginPresenter.loginByGoogle(authCredential);
+                                        }
+                                    } catch (ApiException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    });
 }

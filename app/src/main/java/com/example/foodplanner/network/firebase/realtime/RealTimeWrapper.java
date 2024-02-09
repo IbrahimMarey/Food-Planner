@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.example.foodplanner.model.dtos.PlanDto;
 import com.example.foodplanner.model.dtos.MealDto;
+import com.example.foodplanner.model.dtos.UserDto;
 import com.example.foodplanner.model.repositories.auth.AuthFirebaseRepoImplementation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +23,7 @@ public class RealTimeWrapper {
     private FirebaseDatabase database;
     private DatabaseReference referencePlan;
     private DatabaseReference referenceFav;
+    private DatabaseReference userReference;
     private AuthFirebaseRepoImplementation authFirebaseRepoImplementation;
 
     public RealTimeWrapper() {
@@ -31,6 +33,7 @@ public class RealTimeWrapper {
             Log.i(TAG, "FireBaseRealTimeWrapper: auth ID = "+ authFirebaseRepoImplementation.getUser().getUid() );
             this.referenceFav = database.getReference().child("users").child(authFirebaseRepoImplementation.getUser().getUid()).child("favoritesMeal");
             this.referencePlan = database.getReference().child("users").child(authFirebaseRepoImplementation.getUser().getUid()).child("PlanMeal");
+            this.userReference = database.getReference().child("users").child(authFirebaseRepoImplementation.getUser().getUid()).child("info");
         }
     }
 
@@ -62,7 +65,6 @@ public class RealTimeWrapper {
         });
     }
 
-
     public void removeMealPlan(String id, RealRemoveDelegate realRemoveDelegate) {
         referencePlan.child(id).removeValue(new DatabaseReference.CompletionListener() {
             @Override
@@ -71,7 +73,6 @@ public class RealTimeWrapper {
             }
         });
     }
-
 
     public void getFavMeals(RealFavDelegate realFavDelegate) {
         ValueEventListener postListener = new ValueEventListener() {
@@ -111,4 +112,32 @@ public class RealTimeWrapper {
         };
         referencePlan.addValueEventListener(postListener);
     }
+
+    public void addUserData(UserDto userDto)
+    {
+
+        if (authFirebaseRepoImplementation.isAuthenticated()) {
+            userReference.setValue(userDto).addOnCompleteListener(
+                            task -> Log.i(TAG, "addUserData: done"))
+                    .addOnFailureListener(e -> Log.i(TAG, "addUserData: err "+e.getMessage()));
+
+        }
+    }
+
+    public void getUser(UserDelegate userDelegate) {
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserDto userDto = dataSnapshot.getValue(UserDto.class);
+                userDelegate.userSuccess(userDto);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                userDelegate.userFailure(databaseError.getMessage());
+            }
+        };
+        userReference.addValueEventListener(postListener);
+    }
+
 }

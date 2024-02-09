@@ -1,9 +1,12 @@
 package com.example.foodplanner.views.auth.login.presenter;
 
+import android.app.Activity;
+
 import com.example.foodplanner.model.repositories.auth.AuthFirebaseRepo;
 import com.example.foodplanner.model.repositories.auth.AuthFirebaseRepoImplementation;
 import com.example.foodplanner.network.firebase.auth.AuthFirebaseDelegate;
 import com.example.foodplanner.views.auth.login.view.LoginView;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginPresenterImplementation implements LoginPresenter, AuthFirebaseDelegate
@@ -35,5 +38,14 @@ public class LoginPresenterImplementation implements LoginPresenter, AuthFirebas
     @Override
     public void authFailure(String errMsg) {
         loginView.authFailure(errMsg);
+    }
+    @Override
+    public void loginByGoogle(AuthCredential credential) {
+        authFirebaseRepo.loginByGoogle(credential,this);
+    }
+
+    @Override
+    public void loginByTwitter(Activity activity) {
+        authFirebaseRepo.loginByTwitter(this,activity);
     }
 }

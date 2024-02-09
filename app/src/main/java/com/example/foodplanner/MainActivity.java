@@ -33,13 +33,12 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navView;
     AppBarConfiguration appBarConfiguration;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences preferences = getSharedPreferences(SplashActivity.PREFERENCES_NAME,Context.MODE_PRIVATE);
         String uId =preferences.getString("uId","null");
-        Log.i(TAG, "onCreate: MainActivity UID = "+uId);
-
     }
 
 
@@ -76,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (AuthFirebaseRepoImplementation.getInstance().isAuthenticated()) {
-            FavAndPlanRepoImplementation.getInstance(this.getApplicationContext()).refreshMeals();
-            FavAndPlanRepoImplementation.getInstance(this.getApplicationContext()).refreshPlanner();
+            FavAndPlanRepoImplementation.getInstance(this).refreshMeals();
+            FavAndPlanRepoImplementation.getInstance(this).refreshPlanner();
         }
 
         if (!AuthFirebaseRepoImplementation.getInstance().isAuthenticated()) {

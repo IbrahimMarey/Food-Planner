@@ -30,6 +30,9 @@ import android.widget.Toast;
 
 import com.example.foodplanner.MainActivity;
 import com.example.foodplanner.R;
+import com.example.foodplanner.model.dtos.UserDto;
+import com.example.foodplanner.network.firebase.firestore.FireStore;
+import com.example.foodplanner.network.firebase.realtime.RealTimeWrapper;
 import com.example.foodplanner.views.auth.login.presenter.LoginPresenterImplementation;
 import com.example.foodplanner.views.auth.register.presenter.RegisterPresenter;
 import com.example.foodplanner.views.auth.register.presenter.RegisterPresenterImplementation;
@@ -98,7 +101,7 @@ public class RegisterFragment extends Fragment implements RegisterView{
         loginTV = view.findViewById(R.id.tv_go_to_login);
         googleImg = view.findViewById(R.id.google_login);
         twitterImg = view.findViewById(R.id.twitter_login);
-        facebookImg = view.findViewById(R.id.face_login);
+//        facebookImg = view.findViewById(R.id.face_login);
         // Register Logic
         registerPresenter = RegisterPresenterImplementation.getInstance(this);
         // login by google
@@ -267,6 +270,8 @@ public class RegisterFragment extends Fragment implements RegisterView{
 
     @Override
     public void authSuccessfully(FirebaseUser user) {
+        new RealTimeWrapper().addUserData(new UserDto(user.getUid(),nameET.getText().toString(),"","",emailET.getText().toString(),passwordET.getText().toString()));
+        FireStore.getInstance().addUser(new UserDto(user.getUid(),nameET.getText().toString(),"","",emailET.getText().toString(),passwordET.getText().toString()));
         SharedPreferences preferences = getActivity().getSharedPreferences(SplashActivity.PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("uId",user.getUid().toString());
