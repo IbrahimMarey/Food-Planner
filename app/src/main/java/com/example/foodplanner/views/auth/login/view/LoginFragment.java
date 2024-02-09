@@ -152,9 +152,6 @@ public class LoginFragment extends Fragment implements LoginView{
         animationLogin.setVisibility(View.GONE);
         goToMainActivity();
         Toast.makeText(getActivity(), "Login Successfully", Toast.LENGTH_SHORT).show();
-        String uId = preferences.getString("uId","null");
-        Log.i(MainActivity.TAG, "onCreate: SplashActivity UID = "+uId);
-
     }
 
     @Override

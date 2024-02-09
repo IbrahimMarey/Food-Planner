@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (AuthFirebaseRepoImplementation.getInstance().isAuthenticated()) {
-            FavAndPlanRepoImplementation.getInstance(this.getApplicationContext()).refreshMeals();
-            FavAndPlanRepoImplementation.getInstance(this.getApplicationContext()).refreshPlanner();
+            FavAndPlanRepoImplementation.getInstance(this).refreshMeals();
+            FavAndPlanRepoImplementation.getInstance(this).refreshPlanner();
         }
 
         if (!AuthFirebaseRepoImplementation.getInstance().isAuthenticated()) {
