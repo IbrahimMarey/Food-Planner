@@ -36,4 +36,4 @@ Special thanks to Eng. Yasmeen Hosny, Eng. Heba Ismail, Eng. Hager Samir, and En
 
 ## Installation
 
-To use the Yum Yum Planner Android App, you can download the APK file from the [releases page](https://drive.google.com/file/d/1ahb-A6NSWLfy9NJBai-woUbH363NPiwe/view) and install it on your Android device.
+To use the Food Planner Android App, you can download the APK file from the [releases page](https://drive.google.com/file/d/1ahb-A6NSWLfy9NJBai-woUbH363NPiwe/view) and install it on your Android device.
